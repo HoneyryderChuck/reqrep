@@ -1,0 +1,11 @@
+Response = Struct.new(:status, :headers, :body)
+
+APP = ->(req, rep) do
+  body = "echo!!!!!!"
+  headers = {"content-type" => "text/plain", "content-length" => body.bytesize.to_s}
+  rep.status = 200 
+  rep.headers = headers
+  rep.body = [body]
+end
+
+run APP

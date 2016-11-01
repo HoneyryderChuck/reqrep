@@ -4,7 +4,7 @@ module ReqRep
   class Server
     DEFAULTOPTIONS={
       host: "localhost",
-      port: 9002,
+      port: 9292,
     }
 
     def initialize(argv = ARGV)
@@ -15,22 +15,33 @@ module ReqRep
 
 
     def run
-      if includes = options[:include]
+      if includes = @options[:include]
         $LOAD_PATH.unshift(*includes)
       end
+
+      server.run app, @options
+    end
+
+    def self.run
+      new.run
     end
 
     private
- 
+
+    def server
+      return @server if defined?(@server)
+      @server = ReqRep::Handler.get(@options[:server])
+    end
+
     def app
       return @app if defined?(@app)
 
       @app = begin
-        if !::File.exist? @options[:config]
-          abort "configuration #{@options[:config]} not found"
+        if !::File.exist? @bootfile
+          abort "configuration #{@bootfile} not found"
         end
 
-        app = ReqRep::Builder.parse_file(@options[:config])
+        app = ReqRep::Builder.parse_file(@bootfile)
       end
     end
  

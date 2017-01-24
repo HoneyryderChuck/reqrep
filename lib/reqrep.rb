@@ -5,6 +5,7 @@ module ReqRep
 end
 
 require "reqrep/request"
+require "reqrep/response"
 
 require "reqrep/server"
 require "reqrep/builder"

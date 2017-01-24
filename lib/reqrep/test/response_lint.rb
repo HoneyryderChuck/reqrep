@@ -9,7 +9,7 @@ module ReqRep
 
       def test_headers
         assert response.respond_to?(:headers); "response should respond to #headers"
-        assert response.headers.respond_to(:[]), "response headers should allow key lookup"
+        assert response.headers.respond_to?(:[]), "response headers should allow key lookup"
         assert response.headers.method(:[]).arity == 1, "response headers should allow key lookup"
         response.headers["key"] = "value"
         assert response.headers["key"] == "value", "response headers can be edited"

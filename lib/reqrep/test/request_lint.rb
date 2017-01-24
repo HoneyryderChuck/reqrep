@@ -33,9 +33,6 @@ module ReqRep
         assert request.url.is_a?(String), "request url should be a string"
       end
 
-      def test_params
-        # TODO: is it needed?
-      end
     end
   end
 end

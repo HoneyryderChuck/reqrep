@@ -37,11 +37,26 @@ class ReqRepRequest < Minitest::Test
 
   end
 
+  def test_host
+    req = RequestMock.new(headers: {"host" => "jaguar.com:8080"})
+    assert req.host == "jaguar.com:8080", "host is unexpected"
+
+    req2 = RequestMock.new(headers: {":authority" => "jaguar.com:8080" })
+    assert req2.host == "jaguar.com:8080", "host is unexpected"
+
+    req3 = RequestMock.new(url: "https://jaguar.com:8080/admin/?id=1")
+    assert req3.host == "jaguar.com:8080", "host is unexpected"
+
+    req4 = RequestMock.new(headers: {":authority" => "jabberwocky.com" }, 
+                           url: "https://jaguar.com:8080/admin/?id=1")
+    assert req4.host == "jabberwocky.com", "host is unexpected"
+  end
+
   def test_form
 
   end
 
-  def post_form
+  def test_post_form
 
   end
 
